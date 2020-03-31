@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:id="@+id/group_social"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_skimmer_loading"
+            android:icon="@drawable/ic_menu_rate_app"
+            android:title="@string/str_shimmer_loading" />
+
+        <item
+            android:id="@+id/nav_antigrain_engine"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/str_antigrain_engine" />
+
+    </group>
+
+
+
+</menu>

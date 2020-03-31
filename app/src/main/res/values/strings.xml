@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Xynotec</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="str_ok">OK</string>
+    <string name="str_cancel">Cancel</string>
+
+    <string name="about_copyright">©Copyright by Xynotec 2020</string>
+    <string name="about_infoandsupport">Info and support:</string>
+    <string name="about_email">support@xynotec.com</string>
+
+    <string name="main_activity_title">Xynotec Research</string>
+    <string name="main_content">Research in 2020</string>
+    <string name="str_in_2020">In 2020</string>
+
+    <string name="shimmer_activity_title">CoinMarketCap</string>
+
+    <string name="str_shimmer_loading">Shimmer Loading</string>
+    <string name="str_antigrain_engine">Antigrain Engine</string>
+
+
+
+</resources>
