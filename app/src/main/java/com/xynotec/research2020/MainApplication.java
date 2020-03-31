@@ -10,11 +10,6 @@ import dagger.android.DaggerApplication;
 
 public class MainApplication extends DaggerApplication {
 
-    static
-    {
-        System.loadLibrary("dictdroid");
-    }
-
     private static Context context;
     public static Context getContext()
     {
