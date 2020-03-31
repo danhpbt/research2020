@@ -78,7 +78,6 @@ public class CryptocurrencyListingsLatestResponse {
         @SerializedName("convert")
         private String convert;
 
-        @Inject
         public LatestRequest(int start, int limit, String convert) {
             this.start = start + "";
             this.limit = limit + "";

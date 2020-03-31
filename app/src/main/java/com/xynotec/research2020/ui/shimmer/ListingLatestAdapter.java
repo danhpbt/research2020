@@ -13,9 +13,10 @@ import com.xynotec.research2020.databinding.ListingLatestListItemBinding;
 import java.util.List;
 
 public class ListingLatestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    List<Data> listingLatestList;
 
-    private ListingLatestAdapterListener mListener;
+    ListingLatestAdapterListener mListener;
+
+    List<Data> listingLatestList;
 
     public ListingLatestAdapter(List<Data> listingLatestList) {
         this.listingLatestList = listingLatestList;
@@ -49,10 +50,6 @@ public class ListingLatestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public void setListener(ListingLatestAdapterListener listener) {
-        this.mListener = listener;
-    }
-
     public void clearItems() {
         listingLatestList.clear();
     }
@@ -62,13 +59,18 @@ public class ListingLatestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
-    public interface ListingLatestAdapterListener {
+    public void setListener(ListingLatestAdapterListener listener)
+    {
+        mListener = listener;
+    }
 
-        void onRefresh();
-        void onLoadMore();
+    public interface ListingLatestAdapterListener
+    {
+        void onClickListener(int index);
     }
 
     public class ListingLatestViewHolder extends BaseViewHolder
+        implements ShimmerItemViewModel.ShimmerItemViewModelListener
     {
         ListingLatestListItemBinding mBinding;
         ShimmerItemViewModel mShimmerItemViewModel;
@@ -82,6 +84,7 @@ public class ListingLatestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             final Data data = listingLatestList.get(position);
             mShimmerItemViewModel = new ShimmerItemViewModel(position, data);
+            mShimmerItemViewModel.setListener(this);
             mBinding.setViewModel(mShimmerItemViewModel);
 
             // Immediate Binding
@@ -90,6 +93,10 @@ public class ListingLatestAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings();
         }
-        
+
+        @Override
+        public void onClick(int index) {
+            mListener.onClickListener(index);
+        }
     }
 }

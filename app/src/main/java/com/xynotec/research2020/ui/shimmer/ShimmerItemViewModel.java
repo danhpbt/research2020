@@ -1,20 +1,27 @@
 package com.xynotec.research2020.ui.shimmer;
 
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 
 import com.xynotec.research2020.data.remote.cryptocurrency.listting.latest.Data;
 import com.xynotec.utils.MathUtils;
 
 public class ShimmerItemViewModel {
-    public final ObservableField<String> mIndex;
+    final ObservableInt mIndex = new ObservableInt();
 
     final Data mData;
 
+    private ShimmerItemViewModelListener mListener;
+
     public ShimmerItemViewModel(int index, Data data) {
-        this.mIndex = new ObservableField<>(index + 1 + "");
+        this.mIndex.set(index + 1);
         this.mData = data;
     }
 
+    public String getIndex()
+    {
+        return mIndex.get() + "";
+    }
 
     public String getSymbolImg()
     {
@@ -96,6 +103,22 @@ public class ShimmerItemViewModel {
         }
 
         return str_market_cap;
+    }
+
+    public void setListener(ShimmerItemViewModelListener listener)
+    {
+        mListener = listener;
+    }
+
+    public void onItemClick()
+    {
+        if (mListener != null)
+            mListener.onClick(mIndex.get());
+    }
+
+    public interface ShimmerItemViewModelListener
+    {
+        void onClick(int index);
     }
 
 }

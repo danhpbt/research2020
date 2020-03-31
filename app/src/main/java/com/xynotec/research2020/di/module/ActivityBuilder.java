@@ -4,7 +4,6 @@ import com.xynotec.research2020.ui.main.MainActivity;
 import com.xynotec.research2020.ui.main.MainActivityModule;
 import com.xynotec.research2020.ui.shimmer.ShimmerActivity;
 import com.xynotec.research2020.ui.shimmer.ShimmerActivityModule;
-import com.xynotec.research2020.ui.shimmer.ShimmerActivityProvider;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,7 +17,6 @@ public abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = {
             ShimmerActivityModule.class,
-            ShimmerActivityProvider.class
     })
     abstract ShimmerActivity bindShimmerActivity();
 }

@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -24,6 +26,9 @@ public class ShimmerViewModel extends BaseViewModel {
     private final ObservableBoolean mIsLoading = new ObservableBoolean();
 
     ShimmerViewModelListener mListener;
+
+    CryptocurrencyListingsLatestResponse.LatestRequest mLatestRequest =
+            new CryptocurrencyListingsLatestResponse.LatestRequest(1, 99, "USD");
 
     public ShimmerViewModel(DataManager dataManager) {
         super(dataManager);
@@ -49,8 +54,7 @@ public class ShimmerViewModel extends BaseViewModel {
         setIsLoading(true);
 
         getCompositeDisposable().add(getDataManager()
-                .doCryptoCurrencyListingsLatest(
-                        new CryptocurrencyListingsLatestResponse.LatestRequest(1, 100, "USD"))
+                .doCryptoCurrencyListingsLatest(mLatestRequest)
                 .delay(3, TimeUnit.SECONDS) //delay to view shimmer
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

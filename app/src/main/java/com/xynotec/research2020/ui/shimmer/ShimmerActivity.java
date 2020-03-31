@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class ShimmerActivity extends BaseActivity<ActivityShimmerBinding, ShimmerViewModel>
-    implements ShimmerViewModel.ShimmerViewModelListener
+    implements ShimmerViewModel.ShimmerViewModelListener, ListingLatestAdapter.ListingLatestAdapterListener
 {
     @Inject
     ListingLatestAdapter mListingLatestAdapter;
@@ -79,10 +79,18 @@ public class ShimmerActivity extends BaseActivity<ActivityShimmerBinding, Shimme
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mListingLatestAdapter);
+        mListingLatestAdapter.setListener(this);
+
     }
 
     @Override
     public void onError(String msg) {
         CommonUtils.showErrorDlg(this, msg);
     }
+
+    @Override
+    public void onClickListener(int index) {
+        CommonUtils.showInfoDlg(this, "Item click " + index);
+    }
+
 }
