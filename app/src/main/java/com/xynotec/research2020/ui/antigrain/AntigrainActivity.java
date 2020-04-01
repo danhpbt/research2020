@@ -74,16 +74,10 @@ public class AntigrainActivity extends AppCompatActivity implements CameraCallba
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-//        Camera.Parameters parameters = camera.getParameters();
-//        Camera.Size previewSize = parameters.getPreviewSize();
-//        int with = previewSize.width;
-//        int height = previewSize.height;
-//        int width1 = mCameraSurface.GetPreviewWidth();
-//        int height1 = mCameraSurface.GetPreviewHeight();
+
         if (overlayPreview == true)
         {
-            //mCameraOverlayView.CreateBitmapOverlay(data, mCameraSurface.GetPreviewWidth(), mCameraSurface.GetPreviewHeight());
-            mCameraOverlayView.CreatePreviewBitmap(data, camera);
+            mCameraOverlayView.CreateBitmapOverlay(data, mCameraSurface.getPostRotate(), camera);
             mCameraOverlayView.invalidate();
         }
     }
@@ -91,7 +85,6 @@ public class AntigrainActivity extends AppCompatActivity implements CameraCallba
 
     private void setupPictureMode(){
 
-        //code BB
         if (overlayPreview == false)
         {
             mCameraSurface = new CameraSurface(this);

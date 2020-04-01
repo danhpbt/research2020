@@ -23,8 +23,8 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
     private CameraCallback callback = null;
     private boolean isStarted = false;
 
-    private Camera.Size cameraPreviewSize;
     private Context mContext;
+    private int mPostRotate;
 
 	public CameraSurface(Context context) {
             super(context);
@@ -52,11 +52,6 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 
         try {
             camera.setPreviewDisplay(holder);
-            camera.setPreviewCallback((data, cam) -> {
-                if (callback !=null)
-                    callback.onPreviewFrame(data, cam);
-            });
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,45 +76,38 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 
     private void setupCamera(int width, int height)
     {
-        Camera.Parameters parameters = camera.getParameters();
+        mPostRotate = 0;
         Display display = ((WindowManager)mContext.getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
         if(display.getRotation() == Surface.ROTATION_0) {
-            parameters.setPreviewSize(height, width);
-            camera.setDisplayOrientation(90);
+            mPostRotate = 90;
         }
         else if(display.getRotation() == Surface.ROTATION_90) {
-            parameters.setPreviewSize(width, height);
-            camera.setDisplayOrientation(0);
+            mPostRotate = 0;
         }
-        else  if(display.getRotation() == Surface.ROTATION_180) {
-            parameters.setPreviewSize(height, width);
-            camera.setDisplayOrientation(270);
+        else if(display.getRotation() == Surface.ROTATION_180) {
+            mPostRotate = 270;
         }
         else if(display.getRotation() == Surface.ROTATION_270) {
-            parameters.setPreviewSize(width, height);
-            camera.setDisplayOrientation(180);
+            mPostRotate = 180;
         }
 
-        camera.setParameters(parameters);
+        camera.setDisplayOrientation(mPostRotate);
     }
 
     void startPreviewCamera()
     {
-        Camera.Parameters parameters = camera.getParameters();
-        cameraPreviewSize = parameters.getPreviewSize();
-
         camera.startPreview();
+        camera.setPreviewCallback((data, cam) -> {
+            if (callback !=null)
+                callback.onPreviewFrame(data, cam);
+        });
+
         isStarted = true;
     }
 
-    public int GetPreviewWidth()
+    public int getPostRotate()
     {
-        return cameraPreviewSize.width;
-    }
-
-    public int GetPreviewHeight()
-    {
-        return cameraPreviewSize.height;
+        return mPostRotate;
     }
 }

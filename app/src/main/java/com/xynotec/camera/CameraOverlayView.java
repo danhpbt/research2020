@@ -23,9 +23,7 @@ public class CameraOverlayView extends View {
 
     private Bitmap overlayPreviewBmp = null;
     private int[] dataRGB = null;
-    private int previewW;
-    private int previewH;
-    private String debugTime;
+    private String debugTime = "Debug Info";
 
     Paint mPaint;
 
@@ -47,66 +45,66 @@ public class CameraOverlayView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         // TODO Auto-generated method stub
-
         if (overlayPreviewBmp != null)
         {
-            canvas.drawBitmap(overlayPreviewBmp, 0 , 0, mPaint);
-//            canvas.drawBitmap(overlayPreviewBmp, new Rect(0, 0, previewW, previewH),
-//                    new Rect(0, 0, this.getWidth(), this.getHeight()), mPaint);
+            int imgW = overlayPreviewBmp.getWidth();
+            int imgH = overlayPreviewBmp.getHeight();
 
-            //canvas.drawText(debugTime, getWidth()/2, getHeight()/2, mPaint);
+            canvas.drawBitmap(overlayPreviewBmp, new Rect(0, 0, imgW, imgH),
+                    new Rect(0, 0, this.getWidth(), this.getHeight()), mPaint);
+
+            canvas.drawText(debugTime, getWidth()/2, getHeight()/2, mPaint);
         }
-
-
-        super.onDraw(canvas);
     }
 
-    public void CreateBitmapOverlay(byte[] dataYUV, int width, int height)
+    public void CreateBitmapOverlay(byte[] dataYUV, int postRotate, Camera camera)
     {
-        if ((dataYUV != null) && (width != 0) && (height != 0))
-        {
-            long time = System.currentTimeMillis();
-            if (dataRGB == null)
-                dataRGB = new int[width*height];
+        long time = System.currentTimeMillis();
 
-            YUV2RGB(dataYUV, dataRGB, width, height);
-            GrayScale(dataRGB, width, height);
+        Bitmap bitmap = CreatePreviewBitmap(dataYUV, postRotate, camera);
+        overlayPreviewBmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        bitmap.recycle();
 
-            if (overlayPreviewBmp == null)
-                overlayPreviewBmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        int width = overlayPreviewBmp.getWidth();
+        int height = overlayPreviewBmp.getHeight();
+        int stride = width;
 
-            overlayPreviewBmp.setPixels(dataRGB, 0, width, 0, 0, width, height);
+        if (dataRGB == null)
+            dataRGB = new int[width * height];
 
-            previewW = width;
-            previewH = height;
+        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
 
-            time = System.currentTimeMillis() - time;
+        GrayScale(dataRGB, width, height);
+        //EdgeDetector(dataRGB, width, height);
 
-            debugTime = String.format("Process: %dx%d in %sms", width, height, time);
-            this.invalidate();
-        }
+        overlayPreviewBmp.setPixels(dataRGB, 0, stride, 0, 0, width, height);
 
+        time = System.currentTimeMillis() - time;
+        debugTime = String.format("GrayScale: %dx%d in %sms", width, height, time);
+        this.invalidate();
     }
 
-    public void CreatePreviewBitmap(byte[] dataYUV, Camera camera)
+    private Bitmap CreatePreviewBitmap(byte[] dataYUV, int postRotate, Camera camera)
     {
         Camera.Parameters parameters = camera.getParameters();
+        int format = parameters.getPreviewFormat();
         int width = parameters.getPreviewSize().width;
         int height = parameters.getPreviewSize().height;
 
-        YuvImage yuv = new YuvImage(dataYUV, parameters.getPreviewFormat(), width, height, null);
+        YuvImage yuv = new YuvImage(dataYUV, format, width, height, null);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
 
         byte[] bytes = out.toByteArray();
-        overlayPreviewBmp  = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        Bitmap bitmap  = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-        //rotate test
         Matrix mat = new Matrix();
-        mat.postRotate(90);
-        overlayPreviewBmp = Bitmap.createBitmap(overlayPreviewBmp, 0, 0, overlayPreviewBmp.getWidth(), overlayPreviewBmp.getHeight(), mat, true);
+        mat.postRotate(postRotate);
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
 
+        return bitmap;
     }
+
 
 }
