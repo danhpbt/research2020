@@ -38,7 +38,7 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if(null != camera && isStarted)
             camera.stopPreview();
 
@@ -88,16 +88,15 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
             parameters.setPreviewSize(height, width);
             camera.setDisplayOrientation(90);
         }
-
-        if(display.getRotation() == Surface.ROTATION_90) {
+        else if(display.getRotation() == Surface.ROTATION_90) {
             parameters.setPreviewSize(width, height);
+            camera.setDisplayOrientation(0);
         }
-
-        if(display.getRotation() == Surface.ROTATION_180) {
+        else  if(display.getRotation() == Surface.ROTATION_180) {
             parameters.setPreviewSize(height, width);
+            camera.setDisplayOrientation(270);
         }
-
-        if(display.getRotation() == Surface.ROTATION_270) {
+        else if(display.getRotation() == Surface.ROTATION_270) {
             parameters.setPreviewSize(width, height);
             camera.setDisplayOrientation(180);
         }

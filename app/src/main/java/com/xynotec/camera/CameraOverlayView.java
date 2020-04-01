@@ -2,11 +2,17 @@ package com.xynotec.camera;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.YuvImage;
+import android.hardware.Camera;
 import android.view.View;
+
+import java.io.ByteArrayOutputStream;
 
 public class CameraOverlayView extends View {
 
@@ -44,10 +50,11 @@ public class CameraOverlayView extends View {
 
         if (overlayPreviewBmp != null)
         {
-            canvas.drawBitmap(overlayPreviewBmp, new Rect(0, 0, previewW, previewH),
-                    new Rect(0, 0, this.getWidth(), this.getHeight()), mPaint);
+            canvas.drawBitmap(overlayPreviewBmp, 0 , 0, mPaint);
+//            canvas.drawBitmap(overlayPreviewBmp, new Rect(0, 0, previewW, previewH),
+//                    new Rect(0, 0, this.getWidth(), this.getHeight()), mPaint);
 
-            canvas.drawText(debugTime, getWidth()/2, getHeight()/2, mPaint);
+            //canvas.drawText(debugTime, getWidth()/2, getHeight()/2, mPaint);
         }
 
 
@@ -78,6 +85,27 @@ public class CameraOverlayView extends View {
             debugTime = String.format("Process: %dx%d in %sms", width, height, time);
             this.invalidate();
         }
+
+    }
+
+    public void CreatePreviewBitmap(byte[] dataYUV, Camera camera)
+    {
+        Camera.Parameters parameters = camera.getParameters();
+        int width = parameters.getPreviewSize().width;
+        int height = parameters.getPreviewSize().height;
+
+        YuvImage yuv = new YuvImage(dataYUV, parameters.getPreviewFormat(), width, height, null);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
+
+        byte[] bytes = out.toByteArray();
+        overlayPreviewBmp  = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+        //rotate test
+        Matrix mat = new Matrix();
+        mat.postRotate(90);
+        overlayPreviewBmp = Bitmap.createBitmap(overlayPreviewBmp, 0, 0, overlayPreviewBmp.getWidth(), overlayPreviewBmp.getHeight(), mat, true);
 
     }
 
