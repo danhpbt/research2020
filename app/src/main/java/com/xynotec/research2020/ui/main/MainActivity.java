@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     doSkimmerLoading();
 
                 } else if (id == R.id.nav_antigrain_engine) {
-                    doAntigrainEngine();
+                    doCameraProcessPreview();
                 }
 
                 drawer.closeDrawer(GravityCompat.START);
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         startActivity(intent);
     }
 
-    private void doAntigrainEngine()
+    private void doCameraProcessPreview()
     {
         Intent intent = new Intent(this, AntigrainActivity.class);
         startActivity(intent);
