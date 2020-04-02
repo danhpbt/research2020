@@ -27,6 +27,7 @@ public class CameraOverlayView extends View {
 
     Paint mPaint;
 
+    //convert NV21 -> ARGB
     static native void YUV2RGB(byte[] dataYUV, int[] dataRGB, int width, int height);
     static native void GrayScale(int[] dataRGB, int width, int height);
     static native void EdgeDetector(int[] dataRGB, int width, int height);
@@ -61,23 +62,43 @@ public class CameraOverlayView extends View {
     {
         long time = System.currentTimeMillis();
 
-        Bitmap bitmap = CreatePreviewBitmap(dataYUV, postRotate, camera);
-        overlayPreviewBmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        bitmap.recycle();
-
-        int width = overlayPreviewBmp.getWidth();
-        int height = overlayPreviewBmp.getHeight();
-        int stride = width;
+        Camera.Parameters parameters = camera.getParameters();
+        int format = parameters.getPreviewFormat();
+        int width = parameters.getPreviewSize().width;
+        int height = parameters.getPreviewSize().height;
 
         if (dataRGB == null)
             dataRGB = new int[width * height];
 
-        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
+        YUV2RGB(dataYUV, dataRGB, width, height);//
 
-        GrayScale(dataRGB, width, height);
-        //EdgeDetector(dataRGB, width, height);
+        int nW = height;
+        int nH = width;
 
-        overlayPreviewBmp.setPixels(dataRGB, 0, stride, 0, 0, width, height);
+        GrayScale(dataRGB, nW, nH);
+
+        overlayPreviewBmp = Bitmap.createBitmap(dataRGB, 0, nW,
+                nW, nH, Bitmap.Config.ARGB_8888);
+
+//        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
+
+//        Bitmap bitmap = CreatePreviewBitmap(dataYUV, postRotate, camera);
+//        overlayPreviewBmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+//        bitmap.recycle();
+//
+//        int width = overlayPreviewBmp.getWidth();
+//        int height = overlayPreviewBmp.getHeight();
+//        int stride = width;
+//
+//        if (dataRGB == null)
+//            dataRGB = new int[width * height];
+//
+//        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
+//
+//        GrayScale(dataRGB, width, height);
+//        //EdgeDetector(dataRGB, width, height);
+//
+//        overlayPreviewBmp.setPixels(dataRGB, 0, stride, 0, 0, width, height);
 
         time = System.currentTimeMillis() - time;
         debugTime = String.format("GrayScale: %dx%d in %sms", width, height, time);

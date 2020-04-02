@@ -1,5 +1,6 @@
 #include <jni.h>
 #include "simplecam.h"
+#include "libyuv.h"
 
 #ifndef GRAY_FROM_RGB
 	#define GRAY_FROM_RGB(r, g, b) (unsigned char)((r*29 + g*150 + b*77 + 128)/256)
@@ -50,43 +51,62 @@ void Grayscale(int *data, int width, int height)
 
 void decodeYUV420SP(int* rgb, unsigned char* yuv420sp, int width, int height) 
 {
-	int frameSize = width * height;
-	int i, j, yp;
-	for (j = 0, yp = 0; j < height; j++) 
-	{
-		int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
-		for (i = 0; i < width; i++, yp++) 
-		{
-			int y = (0xff & ((int) yuv420sp[yp])) - 16;
-			if (y < 0)
-				y = 0;
-			if ((i & 1) == 0) 
-			{
-				v = (0xff & yuv420sp[uvp++]) - 128;
-				u = (0xff & yuv420sp[uvp++]) - 128;
-			}
+    int sW = width;
+    int sH = height;
+    int dW = height;
+    int dH = width;
 
-			int y1192 = 1192 * y;
-			int r = (y1192 + 1634 * v);
-			int g = (y1192 - 833 * v - 400 * u);
-			int b = (y1192 + 2066 * u);
+	int res = libyuv::ConvertToARGB(/*const uint8_t * yuv420sp*/ yuv420sp,
+			/*size_t sample_size*/ sW*sH,
+			/*uint8_t * dst_argb*/ (uint8_t *)rgb,
+			/*int dst_stride_argb*/ dW*4,
+			/*int crop_x*/ 0,
+			/*int crop_y*/ 0,
+			/*int src_width*/ sW,
+			/*int src_height*/ sH,
+			/*int crop_width*/ sW,
+			/*int crop_height*/ sH,
+			/*enum RotationMode rotation*/ libyuv::RotationMode::kRotate90,
+			/*uint32_t fourcc*/libyuv::FourCC::FOURCC_NV21);
 
-			if (r < 0)
-				r = 0;
-			else if (r > 262143)
-				r = 262143;
-			if (g < 0)
-				g = 0;
-			else if (g > 262143)
-				g = 262143;
-			if (b < 0)
-				b = 0;
-			else if (b > 262143)
-				b = 262143;
 
-			rgb[yp] = 0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
-		}
-	}
+//	int frameSize = width * height;
+//	int i, j, yp;
+//	for (j = 0, yp = 0; j < height; j++)
+//	{
+//		int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
+//		for (i = 0; i < width; i++, yp++)
+//		{
+//			int y = (0xff & ((int) yuv420sp[yp])) - 16;
+//			if (y < 0)
+//				y = 0;
+//			if ((i & 1) == 0)
+//			{
+//				v = (0xff & yuv420sp[uvp++]) - 128;
+//				u = (0xff & yuv420sp[uvp++]) - 128;
+//			}
+//
+//			int y1192 = 1192 * y;
+//			int r = (y1192 + 1634 * v);
+//			int g = (y1192 - 833 * v - 400 * u);
+//			int b = (y1192 + 2066 * u);
+//
+//			if (r < 0)
+//				r = 0;
+//			else if (r > 262143)
+//				r = 262143;
+//			if (g < 0)
+//				g = 0;
+//			else if (g > 262143)
+//				g = 262143;
+//			if (b < 0)
+//				b = 0;
+//			else if (b > 262143)
+//				b = 262143;
+//
+//			rgb[yp] = 0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
+//		}
+//	}
 }
 
 void Java_com_xynotec_camera_CameraOverlayView_EdgeDetector(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)

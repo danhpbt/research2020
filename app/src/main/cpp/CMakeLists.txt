@@ -17,10 +17,63 @@ add_library( # Sets the name of the library.
         SHARED
 
         # Provides a relative path to your source file(s).
-		simplecam.cpp)
+		simplecam.cpp
+
+		libyuv/source/compare.cc
+		libyuv/source/compare_common.cc
+		libyuv/source/compare_gcc.cc
+		libyuv/source/compare_mmi.cc
+		libyuv/source/compare_msa.cc
+		libyuv/source/compare_neon.cc
+		libyuv/source/compare_neon64.cc
+		libyuv/source/compare_win.cc
+		libyuv/source/convert.cc
+		libyuv/source/convert_argb.cc
+		libyuv/source/convert_from.cc
+		libyuv/source/convert_from_argb.cc
+		libyuv/source/convert_jpeg.cc
+		libyuv/source/convert_to_argb.cc
+		libyuv/source/convert_to_i420.cc
+		libyuv/source/cpu_id.cc
+		libyuv/source/mjpeg_decoder.cc
+		libyuv/source/mjpeg_validate.cc
+		libyuv/source/planar_functions.cc
+		libyuv/source/rotate.cc
+		libyuv/source/rotate_any.cc
+		libyuv/source/rotate_argb.cc
+		libyuv/source/rotate_common.cc
+		libyuv/source/rotate_gcc.cc
+		libyuv/source/rotate_mmi.cc
+		libyuv/source/rotate_msa.cc
+		libyuv/source/rotate_neon.cc
+		libyuv/source/rotate_neon64.cc
+		libyuv/source/rotate_win.cc
+		libyuv/source/row_any.cc
+		libyuv/source/row_common.cc
+		libyuv/source/row_gcc.cc
+		libyuv/source/row_mmi.cc
+		libyuv/source/row_msa.cc
+		libyuv/source/row_neon.cc
+		libyuv/source/row_neon64.cc
+		libyuv/source/row_win.cc
+		libyuv/source/scale.cc
+		libyuv/source/scale_any.cc
+		libyuv/source/scale_argb.cc
+		libyuv/source/scale_common.cc
+		libyuv/source/scale_gcc.cc
+		libyuv/source/scale_mmi.cc
+		libyuv/source/scale_msa.cc
+		libyuv/source/scale_neon.cc
+		libyuv/source/scale_neon64.cc
+		libyuv/source/scale_win.cc
+		libyuv/source/video_common.cc
+		)
 
 include_directories(
 		#remove src/main/cpp/
+		
+		libyuv/include/
+		libyuv/include/libyuv/
 )
 
 # Searches for a specified prebuilt library and stores the path as a
