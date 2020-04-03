@@ -67,4 +67,10 @@ public class ARGBImage {
         mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
     }
 
+    public void toGrayScale()
+    {
+        ImageUtil.GrayScale(mData, mWidth, mHeight);
+        mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
+    }
+
 }

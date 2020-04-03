@@ -17,6 +17,15 @@ void Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteA
 	env->ReleaseIntArrayElements(dData, outRGB, JNI_ABORT);
 }
 
+void Java_com_xynotec_image_ImageUtil_GrayScale(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+	
+	Grayscale(outRGB, width, height);
+	
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
 void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWidth, int sHeight, int* dData, int& dWidth, int& dHeight)
 {
 	RotationMode rotation = RotationMode::kRotate0;
@@ -66,5 +75,23 @@ void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWid
 			/*int crop_height*/ sHeight,
 			/*enum RotationMode rotation*/ rotation,
 			/*uint32_t fourcc*/libyuv::FourCC::FOURCC_NV21);
+}
+
+void Grayscale(int *data, int width, int height)
+{
+	unsigned char* image = (unsigned char*)data;
+	int length = width * height;
+	unsigned char gray = 0;
+	int i;
+	for (i = 0; i < length; i++, image += 4)
+	{
+		gray = GRAY_FROM_RGB(*image, *(image + 1), *(image + 2));
+		
+		*image = gray;
+		*(image + 1) = gray;
+		*(image + 2) = gray;
+	}
+
+	image = 0;
 }
 
