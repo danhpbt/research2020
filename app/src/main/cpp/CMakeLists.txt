@@ -18,6 +18,7 @@ add_library( # Sets the name of the library.
 
         # Provides a relative path to your source file(s).
 		simplecam.cpp
+		image_util.cpp
 
 		libyuv/source/compare.cc
 		libyuv/source/compare_common.cc

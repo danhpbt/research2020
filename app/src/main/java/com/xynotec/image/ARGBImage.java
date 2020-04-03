@@ -55,14 +55,14 @@ public class ARGBImage {
             if (mBitmap != null)
                 mBitmap.recycle();
 
-            mWidth = mWidth;
+            mWidth = nWidth;
             mHeight = nHeight;
             mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
             mData = new int[mWidth*mHeight];
         }
 
-        mBitmap.getPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
-        ImageUtil.YUV2ARGB(data, format, rotation, width, height,
+        //mBitmap.getPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
+        ImageUtil.CovertYUV2ARGB(data, format, rotation, width, height,
                 mData, mWidth, mHeight);
         mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
     }

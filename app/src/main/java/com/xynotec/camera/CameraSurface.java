@@ -100,7 +100,7 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
         camera.startPreview();
         camera.setPreviewCallback((data, cam) -> {
             if (callback !=null)
-                callback.onPreviewFrame(data, cam);
+                callback.onPreviewFrame(data, mPostRotate, cam);
         });
 
         isStarted = true;

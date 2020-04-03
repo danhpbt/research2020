@@ -73,7 +73,7 @@ public class AntigrainActivity extends AppCompatActivity implements CameraCallba
     }
 
     @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
+    public void onPreviewFrame(byte[] data, int rotation, Camera camera) {
 
         if (overlayPreview == true)
         {

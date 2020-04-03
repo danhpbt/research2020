@@ -1,18 +1,22 @@
 #include <jni.h>
-#include "simplecam.h"
+#include "image_util.h"
 #include "libyuv.h"
 
-namespace libyuv;
+using namespace libyuv;
+
+#ifndef GRAY_FROM_RGB
+#define GRAY_FROM_RGB(r, g, b) (unsigned char)((r*29 + g*150 + b*77 + 128)/256)
+#endif
 
 void Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteArray sData, jint sFormat, jint sRotation, jint sWidth, jint sHeight,
-																							jintArray dData, jint dWidth, jint dHeight);
+																							jintArray dData, jint dWidth, jint dHeight)
 {
 	jbyte* outYUV = env->GetByteArrayElements(sData, 0);
 	jint* outRGB = env->GetIntArrayElements(dData, 0);
-	
-	decodeYUV420ARGB(outYUV, sFormat, sRotation, sWidth, sHeight,
+
+	decodeYUV420ARGB((unsigned char*)outYUV, sFormat, sRotation, sWidth, sHeight,
 							outRGB, dWidth, dHeight);
-	
+
 	env->ReleaseByteArrayElements(sData, outYUV, JNI_ABORT);
 	env->ReleaseIntArrayElements(dData, outRGB, JNI_ABORT);
 }
@@ -20,13 +24,14 @@ void Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteA
 void Java_com_xynotec_image_ImageUtil_GrayScale(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
 {
 	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
-	
-	Grayscale(outRGB, width, height);
-	
+
+	convertGrayscale(outRGB, width, height);
+
 	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
 }
 
-void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWidth, int sHeight, int* dData, int& dWidth, int& dHeight)
+void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWidth, int sHeight,
+		int* dData, int& dWidth, int& dHeight)
 {
 	RotationMode rotation = RotationMode::kRotate0;
 
@@ -57,13 +62,13 @@ void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWid
 
 	uint32_t fourcc;
 	if (sFormat == ANDROID_IMAGEFROMAT_NV21)
-		fourcc = libyuv::FourCC::FOURCC_NV21;
+		fourcc = FourCC::FOURCC_NV21;
 	else if (sFormat == ANDROID_IMAGEFROMAT_YV12)
-		fourcc = libyuv::FourCC::FOURCC_I420;
+		fourcc = FourCC::FOURCC_I420;
 	else
 		return;// incorrect format
 
-	int res = libyuv::ConvertToARGB(/*const uint8_t * yuv420sp*/ sData,
+	int res = ConvertToARGB(/*const uint8_t * yuv420sp*/ sData,
 			/*size_t sample_size*/ sWidth*sHeight,
 			/*uint8_t * dst_argb*/ (uint8_t *)dData,
 			/*int dst_stride_argb*/ dWidth*4,
@@ -74,10 +79,10 @@ void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWid
 			/*int crop_width*/ sWidth,
 			/*int crop_height*/ sHeight,
 			/*enum RotationMode rotation*/ rotation,
-			/*uint32_t fourcc*/libyuv::FourCC::FOURCC_NV21);
+			/*uint32_t fourcc*/FourCC::FOURCC_NV21);
 }
 
-void Grayscale(int *data, int width, int height)
+void convertGrayscale(int *data, int width, int height)
 {
 	unsigned char* image = (unsigned char*)data;
 	int length = width * height;
@@ -86,7 +91,7 @@ void Grayscale(int *data, int width, int height)
 	for (i = 0; i < length; i++, image += 4)
 	{
 		gray = GRAY_FROM_RGB(*image, *(image + 1), *(image + 2));
-		
+
 		*image = gray;
 		*(image + 1) = gray;
 		*(image + 2) = gray;
