@@ -1,19 +1,20 @@
 package com.xynotec.image;
 
 import android.graphics.Bitmap;
+import android.graphics.Camera;
+import android.graphics.ImageFormat;
+import android.graphics.PixelFormat;
 
 public class ARGBImage {
     private int[] mData;
+    private Bitmap mBitmap;
     private int mWidth;
     private int mHeight;
 
-    public ARGBImage(int width, int height)
+    public Bitmap getBitmap()
     {
-        mWidth = width;
-        mHeight = height;
-        mData = new int[mWidth * mHeight];
+        return mBitmap;
     }
-
     public int getWidth()
     {
         return mWidth;
@@ -24,15 +25,10 @@ public class ARGBImage {
         return mHeight;
     }
 
-    public  int[] getPixels()
+    public void fromYUV(byte[] data, int format, int rotation, int width, int height)
     {
-        return mData;
-    }
-
-    public static ARGBImage fromNV21(byte[] data, int width, int height, int rotation)
-    {
-        int nWidth;
-        int nHeight;
+        int nWidth = 0;
+        int nHeight = 0;
         if (rotation == 0)
         {
             nWidth = width;
@@ -53,17 +49,22 @@ public class ARGBImage {
             nWidth = height;
             nHeight = width;
         }
-        else
-            return null;
 
-        ARGBImage img = new ARGBImage(nWidth, nHeight);
-        return img;
+        if ((nWidth != this.mWidth) || (nHeight != this.mHeight))
+        {
+            if (mBitmap != null)
+                mBitmap.recycle();
+
+            mWidth = mWidth;
+            mHeight = nHeight;
+            mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+            mData = new int[mWidth*mHeight];
+        }
+
+        mBitmap.getPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
+        ImageUtil.YUV2ARGB(data, format, rotation, width, height,
+                mData, mWidth, mHeight);
+        mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
     }
 
-    public Bitmap toBitmap()
-    {
-        int stride = mWidth;
-        return Bitmap.createBitmap(mData, 0, stride,
-                mWidth, mHeight, Bitmap.Config.ARGB_8888);
-    }
 }
