@@ -12,6 +12,8 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.view.View;
 
+import com.xynotec.image.ARGBImage;
+
 import java.io.ByteArrayOutputStream;
 
 public class CameraOverlayView extends View {
@@ -21,8 +23,7 @@ public class CameraOverlayView extends View {
         System.loadLibrary("simplecam");
     }
 
-    private Bitmap overlayPreviewBmp = null;
-    private int[] dataRGB = null;
+    private ARGBImage overlayPreview;
     private String debugTime = "Debug Info";
 
     Paint mPaint;
@@ -35,6 +36,8 @@ public class CameraOverlayView extends View {
     public CameraOverlayView(Context context) {
         super(context);
 
+        overlayPreview = new ARGBImage();
+
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(Color.MAGENTA);
@@ -46,12 +49,12 @@ public class CameraOverlayView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         // TODO Auto-generated method stub
-        if (overlayPreviewBmp != null)
+        if (overlayPreview.getBitmap() != null)
         {
-            int imgW = overlayPreviewBmp.getWidth();
-            int imgH = overlayPreviewBmp.getHeight();
+            int imgW = overlayPreview.getWidth();
+            int imgH = overlayPreview.getHeight();
 
-            canvas.drawBitmap(overlayPreviewBmp, new Rect(0, 0, imgW, imgH),
+            canvas.drawBitmap(overlayPreview.getBitmap(), new Rect(0, 0, imgW, imgH),
                     new Rect(0, 0, this.getWidth(), this.getHeight()), mPaint);
 
             canvas.drawText(debugTime, getWidth()/2, getHeight()/2, mPaint);
@@ -67,64 +70,13 @@ public class CameraOverlayView extends View {
         int width = parameters.getPreviewSize().width;
         int height = parameters.getPreviewSize().height;
 
-        if (dataRGB == null)
-            dataRGB = new int[width * height];
-
-        YUV2RGB(dataYUV, dataRGB, width, height);//
-
-        int nW = height;
-        int nH = width;
-
-        GrayScale(dataRGB, nW, nH);
-
-        overlayPreviewBmp = Bitmap.createBitmap(dataRGB, 0, nW,
-                nW, nH, Bitmap.Config.ARGB_8888);
-
-//        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
-
-//        Bitmap bitmap = CreatePreviewBitmap(dataYUV, postRotate, camera);
-//        overlayPreviewBmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//        bitmap.recycle();
-//
-//        int width = overlayPreviewBmp.getWidth();
-//        int height = overlayPreviewBmp.getHeight();
-//        int stride = width;
-//
-//        if (dataRGB == null)
-//            dataRGB = new int[width * height];
-//
-//        overlayPreviewBmp.getPixels(dataRGB, 0, stride, 0, 0, width, height);
-//
-//        GrayScale(dataRGB, width, height);
-//        //EdgeDetector(dataRGB, width, height);
-//
-//        overlayPreviewBmp.setPixels(dataRGB, 0, stride, 0, 0, width, height);
+        overlayPreview.fromYUV(dataYUV, format, postRotate, width, height);
+        overlayPreview.toGrayScale();
+        overlayPreview.invalidate();
 
         time = System.currentTimeMillis() - time;
         debugTime = String.format("GrayScale: %dx%d in %sms", width, height, time);
         this.invalidate();
-    }
-
-    private Bitmap CreatePreviewBitmap(byte[] dataYUV, int postRotate, Camera camera)
-    {
-        Camera.Parameters parameters = camera.getParameters();
-        int format = parameters.getPreviewFormat();
-        int width = parameters.getPreviewSize().width;
-        int height = parameters.getPreviewSize().height;
-
-        YuvImage yuv = new YuvImage(dataYUV, format, width, height, null);
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
-
-        byte[] bytes = out.toByteArray();
-        Bitmap bitmap  = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-        Matrix mat = new Matrix();
-        mat.postRotate(postRotate);
-        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
-
-        return bitmap;
     }
 
 

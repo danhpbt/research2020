@@ -57,19 +57,26 @@ public class ARGBImage {
 
             mWidth = nWidth;
             mHeight = nHeight;
-            mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
             mData = new int[mWidth*mHeight];
+            Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+            mBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            bitmap.recycle();
         }
 
-        //mBitmap.getPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
         ImageUtil.CovertYUV2ARGB(data, format, rotation, width, height,
                 mData, mWidth, mHeight);
-        mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
+
     }
 
     public void toGrayScale()
     {
         ImageUtil.GrayScale(mData, mWidth, mHeight);
+
+    }
+
+    public void invalidate()
+    {
         mBitmap.setPixels(mData, 0, mWidth, 0, 0, mWidth, mHeight);
     }
 
