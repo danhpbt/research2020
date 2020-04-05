@@ -51,6 +51,13 @@
             android:theme="@style/AppTheme.FullScreen" >
         </activity>
 
+        <activity
+            android:name="com.xynotec.research2020.ui.imagefilter.ImageFilterActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/filter_activity_title"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
     </application>
 
 </manifest>

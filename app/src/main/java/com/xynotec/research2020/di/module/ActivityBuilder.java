@@ -1,5 +1,6 @@
 package com.xynotec.research2020.di.module;
 
+import com.xynotec.research2020.ui.imagefilter.ImageFilterActivity;
 import com.xynotec.research2020.ui.main.MainActivity;
 import com.xynotec.research2020.ui.main.MainActivityModule;
 import com.xynotec.research2020.ui.shimmer.ShimmerActivity;
@@ -19,4 +20,9 @@ public abstract class ActivityBuilder {
             ShimmerActivityModule.class,
     })
     abstract ShimmerActivity bindShimmerActivity();
+
+    @ContributesAndroidInjector(modules = {
+
+    })
+    abstract ImageFilterActivity bindImageFilterActivity();
 }

@@ -20,6 +20,9 @@
 
     <string name="shimmer_activity_title">CoinMarketCap</string>
 
+    <string name="filter_activity_title">Image Filters</string>
+    <string name="str_image_filter">Image Filters</string>
+
     <string name="str_shimmer_loading">Shimmer Loading</string>
     <string name="str_antigrain_engine">Camera Preview</string>
 

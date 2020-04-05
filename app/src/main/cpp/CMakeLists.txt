@@ -19,6 +19,11 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
 		image_util.cpp
 
+		source/BasicEffect.cpp
+		source/BokehEffect.cpp
+		source/ConvMatrix.cpp
+
+		# libyuv
 		libyuv/source/compare.cc
 		libyuv/source/compare_common.cc
 		libyuv/source/compare_gcc.cc
@@ -67,13 +72,54 @@ add_library( # Sets the name of the library.
 		libyuv/source/scale_neon64.cc
 		libyuv/source/scale_win.cc
 		libyuv/source/video_common.cc
+
+		# Agg2D
+		Agg2D/src/Agg2D.cpp
+		Agg2D/src/Agg2D/agg_arc.cpp
+		Agg2D/src/Agg2D/agg_arrowhead.cpp
+		Agg2D/src/Agg2D/agg_bezier_arc.cpp
+		Agg2D/src/Agg2D/agg_bspline.cpp
+		Agg2D/src/Agg2D/agg_curves.cpp
+		Agg2D/src/Agg2D/agg_embedded_raster_fonts.cpp
+		Agg2D/src/Agg2D/agg_gsv_text.cpp
+		Agg2D/src/Agg2D/agg_image_filters.cpp
+		Agg2D/src/Agg2D/agg_line_aa_basics.cpp
+		Agg2D/src/Agg2D/agg_line_profile_aa.cpp
+		Agg2D/src/Agg2D/agg_rounded_rect.cpp
+		Agg2D/src/Agg2D/agg_sqrt_tables.cpp
+		Agg2D/src/Agg2D/agg_trans_affine.cpp
+		Agg2D/src/Agg2D/agg_trans_double_path.cpp
+		Agg2D/src/Agg2D/agg_trans_single_path.cpp
+		Agg2D/src/Agg2D/agg_trans_warp_magnifier.cpp
+		Agg2D/src/Agg2D/agg_vcgen_bspline.cpp
+		Agg2D/src/Agg2D/agg_vcgen_contour.cpp
+		Agg2D/src/Agg2D/agg_vcgen_dash.cpp
+		Agg2D/src/Agg2D/agg_vcgen_markers_term.cpp
+		Agg2D/src/Agg2D/agg_vcgen_smooth_poly1.cpp
+		Agg2D/src/Agg2D/agg_vcgen_stroke.cpp
+		Agg2D/src/Agg2D/agg_vpgen_clip_polygon.cpp
+		Agg2D/src/Agg2D/agg_vpgen_clip_polyline.cpp
+		Agg2D/src/Agg2D/agg_vpgen_segmentator.cpp
+		Agg2D/src/Agg2D/ctrl/agg_bezier_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_cbox_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_gamma_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_gamma_spline.cpp
+		Agg2D/src/Agg2D/ctrl/agg_polygon_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_rbox_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_scale_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_slider_ctrl.cpp
+		Agg2D/src/Agg2D/ctrl/agg_spline_ctrl.cpp
+
 		)
 
 include_directories(
 		#remove src/main/cpp/
-		
+
+		include/
 		libyuv/include/
 		libyuv/include/libyuv/
+		Agg2D/inc/
+		Agg2D/inc/Agg2D
 )
 
 # Searches for a specified prebuilt library and stores the path as a

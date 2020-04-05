@@ -18,7 +18,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-std=c++11 -Wno-narrowing"
             }
         }
 

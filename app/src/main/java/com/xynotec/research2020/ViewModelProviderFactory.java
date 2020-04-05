@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xynotec.research2020.data.DataManager;
+import com.xynotec.research2020.ui.imagefilter.ImageFilterViewModel;
 import com.xynotec.research2020.ui.main.MainViewModel;
 import com.xynotec.research2020.ui.shimmer.ShimmerViewModel;
 
@@ -29,6 +30,9 @@ public class ViewModelProviderFactory implements ViewModelProvider.Factory {
         }
         else if (modelClass.isAssignableFrom(ShimmerViewModel.class)) {
             return (T) new ShimmerViewModel(mDataManager);
+        }
+        else if (modelClass.isAssignableFrom(ImageFilterViewModel.class)) {
+            return (T) new ImageFilterViewModel(mDataManager);
         }
         //noinspection unchecked
         throw new IllegalArgumentException("Unknown ViewModel class");

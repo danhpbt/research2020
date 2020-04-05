@@ -64,7 +64,7 @@ public class ARGBImage {
             bitmap.recycle();
         }
 
-        ImageUtil.CovertYUV2ARGB(data, format, rotation, width, height,
+        ImageUtil.YUV2ARGB(data, format, rotation, width, height,
                 mData, mWidth, mHeight);
 
     }

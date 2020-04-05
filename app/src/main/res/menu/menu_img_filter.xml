@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_reload"
+        android:title="Reload" />
+    <item
+        android:id="@+id/menu_grayScale"
+        android:title="Gray Scale" />
+    <item
+        android:id="@+id/menu_colorFilter"
+        android:title="Color Filter"/>
+    <item
+        android:id="@+id/menu_gamma"
+        android:title="Gamma"/>
+    <item
+        android:id="@+id/menu_brightness"
+        android:title="Brightness"/>
+    <item
+        android:id="@+id/menu_contrast"
+        android:title="Contrast"/>
+    <item
+        android:id="@+id/menu_invert"
+        android:title="Invert"/>
+    <item
+        android:id="@+id/menu_smooth"
+        android:title="Smooth"/>
+    <item
+        android:id="@+id/menu_gaussianBlur"
+        android:title="GaussianBlur"/>
+    <item
+        android:id="@+id/menu_meanRemoval"
+        android:title="MeanRemoval"/>
+    <item
+        android:id="@+id/menu_sharpen"
+        android:title="Sharpen"/>
+    <item
+        android:id="@+id/menu_embossLaplacian"
+        android:title="Emboss Laplacian"/>
+    <item
+        android:id="@+id/menu_edgeDetect"
+        android:title="Edge Detect"/>
+    <item
+        android:id="@+id/menu_flip"
+        android:title="Flip"/>
+    <item
+        android:id="@+id/menu_randomJitter"
+        android:title="Random Jitter"/>
+    <item
+        android:id="@+id/menu_swirl"
+        android:title="Swirl"/>
+    <item
+        android:id="@+id/menu_sphere"
+        android:title="Sphere"/>
+    <item
+        android:id="@+id/menu_timeWarp"
+        android:title="Time Warp"/>
+    <item
+        android:id="@+id/menu_moire"
+        android:title="Moire"/>
+    <item
+        android:id="@+id/menu_water"
+        android:title="Water"/>
+    <item
+        android:id="@+id/menu_pixelate"
+        android:title="Pixelate"/>
+    <item
+        android:id="@+id/menu_fishEye"
+        android:title="Fish Eye"/>
+    <item
+        android:id="@+id/menu_bokehEffect"
+        android:title="Bokeh Effect"/>
+
+</menu>

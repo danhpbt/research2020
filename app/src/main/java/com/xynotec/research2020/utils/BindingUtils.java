@@ -2,6 +2,7 @@ package com.xynotec.research2020.utils;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
@@ -28,6 +29,11 @@ public final class BindingUtils {
     public static void setImageUrl(ImageView imageView, String url) {
         Context context = imageView.getContext();
         Glide.with(context).load(url).into(imageView);
+    }
+
+    @BindingAdapter("imageBitmap")
+    public static void loadImage(ImageView iv, Bitmap bitmap) {
+        iv.setImageBitmap(bitmap);
     }
 	
 }

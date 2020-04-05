@@ -14,6 +14,11 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/str_antigrain_engine" />
 
+        <item
+            android:id="@+id/nav_image_filter"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/str_image_filter" />
+
     </group>
 
 

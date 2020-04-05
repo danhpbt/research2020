@@ -18,20 +18,10 @@ import java.io.ByteArrayOutputStream;
 
 public class CameraOverlayView extends View {
 
-    static
-    {
-        System.loadLibrary("simplecam");
-    }
-
     private ARGBImage overlayPreview;
     private String debugTime = "Debug Info";
 
     Paint mPaint;
-
-    //convert NV21 -> ARGB
-    static native void YUV2RGB(byte[] dataYUV, int[] dataRGB, int width, int height);
-    static native void GrayScale(int[] dataRGB, int width, int height);
-    static native void EdgeDetector(int[] dataRGB, int width, int height);
 
     public CameraOverlayView(Context context) {
         super(context);

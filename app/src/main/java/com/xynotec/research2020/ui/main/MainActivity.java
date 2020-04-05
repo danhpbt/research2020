@@ -19,6 +19,7 @@ import com.xynotec.research2020.R;
 import com.xynotec.research2020.ViewModelProviderFactory;
 import com.xynotec.research2020.databinding.ActivityMainBinding;
 import com.xynotec.research2020.ui.antigrain.AntigrainActivity;
+import com.xynotec.research2020.ui.imagefilter.ImageFilterActivity;
 import com.xynotec.research2020.ui.shimmer.ShimmerActivity;
 
 import androidx.annotation.Nullable;
@@ -81,6 +82,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 } else if (id == R.id.nav_antigrain_engine) {
                     doCameraProcessPreview();
                 }
+                else if (id == R.id.nav_image_filter) {
+                    doImageFilter();
+                }
 
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -113,6 +117,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private void doCameraProcessPreview()
     {
         Intent intent = new Intent(this, AntigrainActivity.class);
+        startActivity(intent);
+    }
+
+    private void doImageFilter()
+    {
+        Intent intent = new Intent(this, ImageFilterActivity.class);
         startActivity(intent);
     }
 
