@@ -3651,36 +3651,6 @@ void StichEffect_PDN(BMP_ARGB *data, int width, int height,
 void EXPORT_DLL BokehEffect_Test(BMP_ARGB *data, int width, int height)
 {
 
-	/*
-	BokehEffect* bEffect = new BokehEffect(data, width, height);	
-	//bEffect->DrawRandomCircle(10, 20);
-	bEffect->DrawSmt();
-	DELETE(bEffect);
-	
-*/
-
-	/*
-	BMP_ARGB *tempData = NEW_ARRAY(BMP_ARGB, width*height);
-	memset(tempData, 0, width*height*sizeof(BMP_ARGB));
-
-	BokehEffect* bEffect = new BokehEffect(tempData, width, height);	
-	bEffect->DrawRandomCircle(20, 10);
-	//bEffect->DrawSmt();
-
-	GaussianBlur_PDN(tempData, width, height, 10);
-	//memcpy(data, tempData, width*height*sizeof(BMP_ARGB));
-
-	//////
-	BokehEffect* bbEffect = new BokehEffect(data, width, height);	
-	bbEffect->DrawImage(bEffect->GetImage(), Agg2D::BlendMode::BlendColorDodge);	
-	//bbEffect->DrawImage(bEffect->GetImage(), Agg2D::BlendMode::BlendAlpha);		
-	DELETE(bbEffect);
-	//////
-
-	DELETE(bEffect);
-	DELETE_ARRAY(tempData);
-	*/
-
 	BokehEffect* bEffect = new BokehEffect(data, width, height);	
 	//bEffect->DrawHexgonBokeh();
 	//bEffect->DrawPentagonBokeh();

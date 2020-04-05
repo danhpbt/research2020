@@ -29,6 +29,12 @@ Agg2D::~Agg2D()
 {
 #ifndef AGG2D_USE_FREETYPE
     ::ReleaseDC(0, m_fontDC);
+#else
+
+#ifdef __ANDROID__
+    fontMemoryRelease();
+#endif
+
 #endif
 }
 
@@ -110,6 +116,14 @@ Agg2D::Agg2D() :
 	,
 #ifdef AGG2D_USE_FREETYPE
     m_fontEngine(),
+
+	#ifdef __ANDROID__
+		m_fontMemory(NULL),
+		m_fontMemSize(0),
+	#endif
+
+
+
 #else
     m_fontDC(::GetDC(0)),
     m_fontEngine(m_fontDC),
@@ -945,6 +959,38 @@ void Agg2D::flipText(bool flip)
     m_fontEngine.flip_y(flip);
 }
 
+#ifdef __ANDROID__
+
+AAssetManager* gAssetManger = NULL;
+//------------------------------------------------------------------------
+void Agg2D::fontMemory(const char* font_name)
+{
+    if (m_fontMemory == NULL) {
+        AAssetManager *manager = gAssetManger;
+        AAsset *fontFile = AAssetManager_open(manager, font_name, AASSET_MODE_BUFFER);
+
+        m_fontMemSize = AAsset_getLength(fontFile);
+        m_fontMemory = new char[m_fontMemSize];
+
+        const void *fontData = AAsset_getBuffer(fontFile);
+        memcpy(m_fontMemory, fontData, m_fontMemSize);
+
+        AAsset_close(fontFile);
+    }
+
+}
+
+//------------------------------------------------------------------------
+void Agg2D::fontMemoryRelease()
+{
+    if (m_fontMemory)
+    {
+        delete m_fontMemory;
+    }
+    m_fontMemory = NULL;
+}
+
+#endif
 //------------------------------------------------------------------------
 void Agg2D::font(const char* fontName,
                  double height,
@@ -958,11 +1004,22 @@ void Agg2D::font(const char* fontName,
     m_fontCacheType = ch;
 
 #ifdef AGG2D_USE_FREETYPE
+
+#ifdef __ANDROID__
+    fontMemory((char*)fontName);
+    m_fontEngine.load_font(fontName,
+                           0,
+                           (ch == VectorFontCache) ?
+                                agg::glyph_ren_outline :
+                                agg::glyph_ren_agg_gray8,
+                            m_fontMemory, m_fontMemSize);
+#else
     m_fontEngine.load_font(fontName,
                            0,
                            (ch == VectorFontCache) ?
                                 agg::glyph_ren_outline :
                                 agg::glyph_ren_agg_gray8);
+#endif
     m_fontEngine.hinting(m_textHints);
     m_fontEngine.height((ch == VectorFontCache) ? height : worldToScreen(height));
 #else

@@ -19,11 +19,11 @@
 //
 //----------------------------------------------------------------------------
 
-#ifndef AGG2D_ICLUDED
-#define AGG2D_ICLUDED
+#ifndef AGG2D_INCLUDED
+#define AGG2D_INCLUDED
 
 // With this define uncommented you can use FreeType font engine
-//#define USING_FONT_ENGINE
+#define USING_FONT_ENGINE
 #define AGG2D_USE_FREETYPE
 
 // JME
@@ -55,6 +55,12 @@
 
 #ifdef AGG2D_USE_FREETYPE
 #include "agg_font_freetype.h"
+
+		#ifdef __ANDROID__
+			#include <android/asset_manager.h>
+			#include <android/asset_manager_jni.h>        
+            extern AAssetManager* gAssetManger;
+        #endif
 #else
 #include "agg_font_win32_tt.h"
 #endif
@@ -413,6 +419,12 @@ public:
     //-----------------------
 #ifdef USING_FONT_ENGINE
     void   flipText(bool flip);
+
+#ifdef __ANDROID__
+    void   fontMemory(const char* font_name);
+    void   fontMemoryRelease();
+#endif
+
     void   font(const char* fileName, double height,
                 bool bold = false,
                 bool italic = false,
@@ -606,6 +618,11 @@ private:
     double                          m_fontAscent;
     double                          m_fontDescent;
     FontCacheType                   m_fontCacheType;
+
+#ifdef __ANDROID__
+    char*                           m_fontMemory;
+    long                            m_fontMemSize;
+#endif
 
     ImageFilter                     m_imageFilter;
     ImageResample                   m_imageResample;

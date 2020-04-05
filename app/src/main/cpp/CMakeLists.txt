@@ -110,16 +110,98 @@ add_library( # Sets the name of the library.
 		Agg2D/src/Agg2D/ctrl/agg_slider_ctrl.cpp
 		Agg2D/src/Agg2D/ctrl/agg_spline_ctrl.cpp
 
+		Agg2D/src/font_freetype/agg_font_freetype.cpp
+
+		#FreeType
+		freetype2/src/autofit/autofit.c
+		freetype2/src/base/basepic.c
+		freetype2/src/base/ftapi.c
+		freetype2/src/base/ftbase.c
+		freetype2/src/base/ftbbox.c
+		freetype2/src/base/ftbitmap.c
+		freetype2/src/base/ftdbgmem.c
+		freetype2/src/base/ftdebug.c
+		freetype2/src/base/ftglyph.c
+		freetype2/src/base/ftinit.c
+		freetype2/src/base/ftpic.c
+		freetype2/src/base/ftstroke.c
+		freetype2/src/base/ftsynth.c
+		freetype2/src/base/ftsystem.c
+		freetype2/src/cff/cff.c
+		freetype2/src/pshinter/pshinter.c
+		freetype2/src/pshinter/pshglob.c
+		freetype2/src/pshinter/pshpic.c
+		freetype2/src/pshinter/pshrec.c
+		freetype2/src/psnames/psnames.c
+		freetype2/src/psnames/pspic.c
+		freetype2/src/raster/raster.c
+		freetype2/src/raster/rastpic.c
+		freetype2/src/sfnt/pngshim.c
+		freetype2/src/sfnt/sfntpic.c
+		freetype2/src/sfnt/ttbdf.c
+		freetype2/src/sfnt/ttkern.c
+		freetype2/src/sfnt/ttload.c
+		freetype2/src/sfnt/ttmtx.c
+		freetype2/src/sfnt/ttpost.c
+		freetype2/src/sfnt/ttsbit.c
+		freetype2/src/sfnt/sfobjs.c
+		freetype2/src/sfnt/ttcmap.c
+		freetype2/src/sfnt/sfdriver.c
+		freetype2/src/smooth/smooth.c
+		freetype2/src/smooth/ftspic.c
+		freetype2/src/truetype/truetype.c
+		freetype2/src/type1/t1driver.c
+		freetype2/src/cid/cidgload.c
+		freetype2/src/cid/cidload.c
+		freetype2/src/cid/cidobjs.c
+		freetype2/src/cid/cidparse.c
+		freetype2/src/cid/cidriver.c
+		freetype2/src/pfr/pfr.c
+		freetype2/src/pfr/pfrgload.c
+		freetype2/src/pfr/pfrload.c
+		freetype2/src/pfr/pfrobjs.c
+		freetype2/src/pfr/pfrsbit.c
+		freetype2/src/type42/t42objs.c
+		freetype2/src/type42/t42parse.c
+		freetype2/src/type42/type42.c
+		freetype2/src/winfonts/winfnt.c
+		freetype2/src/pcf/pcfread.c
+		freetype2/src/pcf/pcfutil.c
+		freetype2/src/pcf/pcfdrivr.c
+		freetype2/src/psaux/afmparse.c
+		freetype2/src/psaux/psaux.c
+		freetype2/src/psaux/psconv.c
+		freetype2/src/psaux/psobjs.c
+		freetype2/src/psaux/t1decode.c
+		freetype2/src/tools/apinames.c
+		freetype2/src/type1/t1afm.c
+		freetype2/src/type1/t1gload.c
+		freetype2/src/type1/t1load.c
+		freetype2/src/type1/t1objs.c
+		freetype2/src/type1/t1parse.c
+		freetype2/src/bdf/bdfdrivr.c
+		freetype2/src/bdf/bdflib.c
+		freetype2/src/gzip/ftgzip.c
+		freetype2/src/lzw/ftlzw.c
+
 		)
 
-include_directories(
-		#remove src/main/cpp/
+add_definitions(-DFT2_BUILD_LIBRARY)
 
+include_directories(
 		include/
+
 		libyuv/include/
 		libyuv/include/libyuv/
+
 		Agg2D/inc/
-		Agg2D/inc/Agg2D
+		Agg2D/inc/Agg2D/
+		Agg2D/inc/font_freetype/
+
+		freetype2/include/
+		freetype2/include/freetype/
+		freetype2/include/freetype/config/
+		freetype2/include/freetype/internal/
 )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -142,6 +224,8 @@ find_library( # Sets the name of the path variable.
 target_link_libraries( # Specifies the target library.
 		simplecam
 
+		android
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib})
+        ${log-lib}
+		${android-lib})

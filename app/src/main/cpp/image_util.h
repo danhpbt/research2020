@@ -15,6 +15,7 @@ extern "C"
 #endif
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteArray sData, jint sFormat, jint sRotation, jint sWidth, jint sHeight,
 																							jintArray dData, jint dWidth, jint dHeight);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_AntiGrain(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_GrayScale(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_ColorFilter(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint filter);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_Gamma(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jdouble red, jdouble green, jdouble blue);
