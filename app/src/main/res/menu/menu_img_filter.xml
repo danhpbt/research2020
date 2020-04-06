@@ -6,6 +6,9 @@
         android:id="@+id/menu_reload"
         android:title="Reload" />
     <item
+        android:id="@+id/menu_antigrain"
+        android:title="AntiGrain" />
+    <item
         android:id="@+id/menu_grayScale"
         android:title="Gray Scale" />
     <item

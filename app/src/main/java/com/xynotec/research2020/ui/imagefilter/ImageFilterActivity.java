@@ -84,6 +84,10 @@ public class ImageFilterActivity extends BaseActivity<ActivityImagefilterBinding
                 mImageFilterViewModel.reload();
                 break;
 
+            case R.id.menu_antigrain:
+                mImageFilterViewModel.antiGrain();
+                break;
+
             case R.id.menu_grayScale:
                 mImageFilterViewModel.grayScale();
                 break;

@@ -13,6 +13,8 @@ void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWid
 extern "C"
 {
 #endif
+
+JNIEXPORT void JNICALL Java_com_xynotec_research2020_MainApplication_loadAssetManager(JNIEnv *env, jobject thiz, jobject assetManager);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteArray sData, jint sFormat, jint sRotation, jint sWidth, jint sHeight,
 																							jintArray dData, jint dWidth, jint dHeight);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_AntiGrain(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);

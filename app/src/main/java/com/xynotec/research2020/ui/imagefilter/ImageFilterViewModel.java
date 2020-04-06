@@ -68,6 +68,29 @@ public class ImageFilterViewModel extends BaseViewModel {
         setIsLoading(false);
     }
 
+    public void antiGrain()
+    {
+        setIsLoading(true);
+
+        long time = System.currentTimeMillis();
+
+        int length = mData.length;
+        int[] data = new int[length];
+
+        System.arraycopy(mData, 0, data, 0, length);
+        ImageUtil.AntiGrain(data, mWidth, mHeight);
+        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
+
+        time = System.currentTimeMillis() - time;
+
+        String msg = String.format("Grayscale image %dx%d in %d", mWidth, mHeight, time);
+
+        if (mListener != null)
+            mListener.onMessage(msg);
+
+        setIsLoading(false);
+    }
+
     public void grayScale()
     {
         setIsLoading(true);

@@ -2,13 +2,9 @@ package com.xynotec.image;
 
 public class ImageUtil {
 
-    static
-    {
-        System.loadLibrary("simplecam");
-    }
-
     public static native void YUV2ARGB(byte[] sData, int sFormat, int sRotation, int sWidth, int sHeight,
                                 int[] dData, int dWidth, int dHeight);
+    public static native void AntiGrain(int[] dataRGB, int width, int height);
     public static native void GrayScale(int[] dataRGB, int width, int height);
     public static native void ColorFilter(int[] dataRGB, int width, int height, int filter);
     public static native void Gamma(int[] dataRGB, int width, int height, double red, double green, double blue);
