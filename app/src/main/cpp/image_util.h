@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <android/log.h>
 #include <stdlib.h>
+#include "Typedef.h"
 
 #define ANDROID_IMAGEFROMAT_NV21			17
 #define ANDROID_IMAGEFROMAT_YV12			842094169
@@ -9,7 +10,6 @@
 
 void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWidth, int sHeight,
 		int* dData, int& dWidth, int& dHeight);
-
 extern "C"
 {
 #endif
@@ -42,6 +42,26 @@ JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_FishEye(JNIEnv* env, job
 //void LiquidRender(byte* surface);
 //void Agg2DOverlayImage(System::Drawing::Bitmap^ overlayImg);
 JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_BokehEffects(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
+
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_Tube(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jdouble m_iCurvature, jboolean m_bInverse, jboolean bSmoothing);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_MyTube(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jdouble m_iCurvature, jboolean m_bInverse, jboolean bSmoothing);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_InkSketch(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint inkOutline, jint coloring);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_EdgeDetector(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_EdgeMaster(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint color, jint amount);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_ToonEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_OilEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint range, jint levels);//java
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_PastelEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint range, jint levels);//paint.net
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_DreamEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint focus);//paint.net
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_SmearEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_SmearEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint shape, jfloat angle, jfloat density,
+							jfloat scatter, jint distance, jfloat mix, jboolean background);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_GaussianBlurPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint radius);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_GlowEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint radius, jint brightness, jint contrast);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_JitterEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height,
+                                                                         jint maxDistance, jint minDistance, jint Width, jint spacing,
+                                                                         jint angleDeg, jint edge);
+JNIEXPORT void JNICALL Java_com_xynotec_image_ImageUtil_StichEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height,
+                                jint distance, jint nWidth, jint angle1, jint angle2, jboolean Wrap);
 
 #ifdef __cplusplus
 }

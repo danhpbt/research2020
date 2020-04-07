@@ -74,5 +74,50 @@
     <item
         android:id="@+id/menu_bokehEffect"
         android:title="Bokeh Effect"/>
+    <item
+        android:id="@+id/menu_tube"
+        android:title="Tube"/>
+    <item
+        android:id="@+id/menu_mytube"
+        android:title="My Tube"/>
+    <item
+        android:id="@+id/menu_inkSketch"
+        android:title="Ink Sketch"/>
+    <item
+        android:id="@+id/menu_edgeDetector"
+        android:title="Edge Detector"/>
+    <item
+        android:id="@+id/menu_edgeMaster"
+        android:title="Edge Master"/>
+    <item
+        android:id="@+id/menu_toonEffect"
+        android:title="Toon Effect"/>
+    <item
+        android:id="@+id/menu_oilEffect"
+        android:title="Oil Effect"/>
+    <item
+        android:id="@+id/menu_pastelEffect"
+        android:title="Pastel Effect"/>
+    <item
+        android:id="@+id/menu_dreamEffect"
+        android:title="Dream Effect"/>
+    <item
+        android:id="@+id/menu_smearEffect"
+        android:title="Smear Effect"/>
+    <item
+        android:id="@+id/menu_smearEffectPDN"
+        android:title="Smear Effect PDN"/>
+    <item
+        android:id="@+id/menu_gaussianBlurPDN"
+        android:title="GaussianBlur PDN"/>
+    <item
+        android:id="@+id/menu_glowEffectPDN"
+        android:title="Glow Effect PDN"/>
+    <item
+        android:id="@+id/menu_jitterEffect_PDN"
+        android:title="Jitter Effect PDN"/>
+    <item
+        android:id="@+id/menu_stichEffect_PDN"
+        android:title="Stich Effect PDN"/>
 
 </menu>

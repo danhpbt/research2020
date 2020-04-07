@@ -9,12 +9,12 @@
 using namespace libyuv;
 
 
-void JNICALL Java_com_xynotec_research2020_MainApplication_loadAssetManager(JNIEnv *env, jobject thiz, jobject assetManager)
+void Java_com_xynotec_research2020_MainApplication_loadAssetManager(JNIEnv *env, jobject thiz, jobject assetManager)
 {
     gAssetManger = AAssetManager_fromJava(env, assetManager);
 }
 
-void JNICALL Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteArray sData, jint sFormat, jint sRotation, jint sWidth, jint sHeight,
+void Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz, jbyteArray sData, jint sFormat, jint sRotation, jint sWidth, jint sHeight,
 																							jintArray dData, jint dWidth, jint dHeight)
 {
 	jbyte* outYUV = env->GetByteArrayElements(sData, 0);
@@ -26,7 +26,7 @@ void JNICALL Java_com_xynotec_image_ImageUtil_YUV2ARGB(JNIEnv* env, jobject thiz
 	env->ReleaseByteArrayElements(sData, outYUV, JNI_ABORT);
 	env->ReleaseIntArrayElements(dData, outRGB, JNI_ABORT);
 }
-void JNICALL Java_com_xynotec_image_ImageUtil_AntiGrain(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
+void Java_com_xynotec_image_ImageUtil_AntiGrain(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
 {
 	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
 
@@ -545,6 +545,159 @@ void Java_com_xynotec_image_ImageUtil_BokehEffects(JNIEnv* env, jobject thiz, ji
 	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
 }
 
+void Java_com_xynotec_image_ImageUtil_Tube(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jdouble m_iCurvature, jboolean m_bInverse, jboolean bSmoothing)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	Tube((BMP_ARGB*)outRGB, width, height,m_iCurvature, m_bInverse, bSmoothing);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_MyTube(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jdouble m_iCurvature, jboolean m_bInverse, jboolean bSmoothing)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	MyTube((BMP_ARGB*)outRGB, width, height,m_iCurvature, m_bInverse, bSmoothing);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+
+}
+
+void Java_com_xynotec_image_ImageUtil_InkSketch(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint inkOutline, jint coloring)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	InkSketch((BMP_ARGB*)outRGB, width, height, inkOutline, coloring);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+
+}
+void Java_com_xynotec_image_ImageUtil_EdgeDetector(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	EdgeDetector((BMP_ARGB*)outRGB, width, height);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+
+}
+
+void Java_com_xynotec_image_ImageUtil_EdgeMaster(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint color, jint amount)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	EdgeMaster((BMP_ARGB*)outRGB, width, height, color, amount);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_ToonEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	ToonEffect((BMP_ARGB*)outRGB, width, height);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_OilEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint range, jint levels)//java
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	OilEffect((BMP_ARGB*)outRGB, width, height, range, levels);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_PastelEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint range, jint levels)//paint.net
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	PastelEffect((BMP_ARGB*)outRGB, width, height, range, levels);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_DreamEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint focus)//paint.net
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	DreamEffect((BMP_ARGB*)outRGB, width, height, focus);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_SmearEffect(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	SmearEffect((BMP_ARGB*)outRGB, width, height);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_SmearEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint shape, jfloat angle, jfloat density,
+														jfloat scatter, jint distance, jfloat mix, jboolean background)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	SmearEffect((BMP_ARGB*)outRGB, width, height, shape, angle, density,
+			scatter, distance, mix, background);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_GaussianBlurPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint radius)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	GaussianBlur_PDN((BMP_ARGB*)outRGB, width, height, radius);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_GlowEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint radius, jint brightness, jint contrast)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	GlowEffect_PDN((BMP_ARGB*)outRGB, width, height, radius, brightness, contrast);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_BrightnessAndContrastAdjustmentPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height, jint brightness, jint contrast)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	BrightnessAndContrastAdjustment_PDN((BMP_ARGB*)outRGB, width, height, brightness, contrast);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_JitterEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height,
+															 jint maxDistance, jint minDistance, jint Width, jint spacing,
+															 jint angleDeg, jint edge)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	JitterEffect_PDN((BMP_ARGB*)outRGB, width, height, maxDistance, minDistance, Width, spacing,
+			angleDeg, edge);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
+void Java_com_xynotec_image_ImageUtil_StichEffectPDN(JNIEnv* env, jobject thiz, jintArray dataRGB, jint width, jint height,
+								   jint distance, jint nWidth, jint angle1, jint angle2, jboolean Wrap)
+{
+	jint* outRGB = env->GetIntArrayElements(dataRGB, 0);
+
+	StichEffect_PDN((BMP_ARGB*)outRGB, width, height, distance, nWidth,
+			angle1, angle2, Wrap);
+
+	env->ReleaseIntArrayElements(dataRGB, outRGB, 0);
+}
+
 /////////////////////////////////////////////////////////
 void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWidth, int sHeight,
 		int* dData, int& dWidth, int& dHeight)
@@ -597,3 +750,4 @@ void decodeYUV420ARGB(unsigned char* sData, int sFormat, int sRotation, int sWid
 			/*enum RotationMode rotation*/ rotation,
 			/*uint32_t fourcc*/FourCC::FOURCC_NV21);
 }
+

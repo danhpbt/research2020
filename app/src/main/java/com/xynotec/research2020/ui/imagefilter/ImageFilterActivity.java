@@ -176,6 +176,66 @@ public class ImageFilterActivity extends BaseActivity<ActivityImagefilterBinding
                 mImageFilterViewModel.bokehEffects();
                 break;
 
+            case R.id.menu_tube:
+                mImageFilterViewModel.tube();
+                break;
+            
+            case R.id.menu_mytube:
+                mImageFilterViewModel.myTube();
+                break;
+    
+            case R.id.menu_inkSketch:
+                mImageFilterViewModel.inkSketch();
+                break;
+    
+            case R.id.menu_edgeDetector:
+                mImageFilterViewModel.edgeDetector();
+                break;
+    
+            case R.id.menu_edgeMaster:
+                mImageFilterViewModel.edgeMaster();
+                break;
+    
+            case R.id.menu_toonEffect:
+                mImageFilterViewModel.toonEffect();
+                break;
+    
+            case R.id.menu_oilEffect:
+                mImageFilterViewModel.oilEffect();
+                break;
+    
+            case R.id.menu_pastelEffect:
+                mImageFilterViewModel.pastelEffect();
+                break;
+    
+            case R.id.menu_dreamEffect:
+                mImageFilterViewModel.dreamEffect();
+                break;
+    
+            case R.id.menu_smearEffect:
+                mImageFilterViewModel.smearEffect();
+                break;
+
+            case R.id.menu_smearEffectPDN:
+                mImageFilterViewModel.smearEffectPDN();
+                break;
+
+            case R.id.menu_gaussianBlurPDN:
+                mImageFilterViewModel.gaussianBlurPDN();
+                break;
+    
+            case R.id.menu_glowEffectPDN:
+                mImageFilterViewModel.glowEffectPDN();
+                break;
+
+            case R.id.menu_jitterEffect_PDN:
+                mImageFilterViewModel.jitterEffectPDN();
+                break;
+    
+            case R.id.menu_stichEffect_PDN:
+                mImageFilterViewModel.stichEffectPDN();
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

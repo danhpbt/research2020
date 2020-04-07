@@ -103,7 +103,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("AntiGrain image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -134,7 +134,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("GrayScale image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -196,7 +196,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Gamma image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -227,7 +227,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Brightness image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -258,7 +258,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Contrast image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -289,7 +289,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Invert image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -320,7 +320,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Smooth image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -351,7 +351,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("GaussianBlur image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -382,7 +382,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("MeanRemoval image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -413,7 +413,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Sharpen image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -444,7 +444,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("EmbossLaplacian image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -475,7 +475,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("EdgeDetect image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -506,7 +506,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Flip image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -537,7 +537,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("RandomJitter image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -568,7 +568,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Swirl image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -599,7 +599,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Sphere image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -630,7 +630,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("TimeWarp image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -661,7 +661,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Moire image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -692,7 +692,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Water image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -723,7 +723,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("Pixelate image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -754,7 +754,7 @@ public class ImageFilterViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(o -> {
                             mBitmap.set((Bitmap)o);
-                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            String msg = String.format("FishEye image %dx%d in %d", mWidth, mHeight, time[0]);
                             if (mListener != null)
                                 mListener.onMessage(msg);
                         },
@@ -787,7 +787,7 @@ public class ImageFilterViewModel extends BaseViewModel {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(o -> {
             mBitmap.set((Bitmap)o);
-            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+            String msg = String.format("BokehEffects image %dx%d in %d", mWidth, mHeight, time[0]);
             if (mListener != null)
                 mListener.onMessage(msg);
             },
@@ -795,6 +795,486 @@ public class ImageFilterViewModel extends BaseViewModel {
                 }));
     }
 
+    public void tube()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Tube(data, mWidth, mHeight, 0.03, false, true); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("Tube image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void myTube()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.MyTube(data, mWidth, mHeight, 0.03, false, true);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("MyTube image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void inkSketch()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.InkSketch(data, mWidth, mHeight, 50, 50);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("InkSketch image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void edgeDetector()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.EdgeDetector(data, mWidth, mHeight);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("EdgeDetector image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+    public void edgeMaster()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.EdgeMaster(data, mWidth, mHeight, 0xFF00, 5);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("EdgeMaster image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void toonEffect()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.ToonEffect(data, mWidth, mHeight);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ToonEffect image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void oilEffect()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.OilEffect(data, mWidth, mHeight, 3, 50);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("OilEffect image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+
+    }
+
+    public void pastelEffect()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.PastelEffect(data, mWidth, mHeight, 3, 50);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("PastelEffect image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void dreamEffect()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.DreamEffect(data, mWidth, mHeight, 10);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("DreamEffect image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void smearEffect()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.SmearEffect(data, mWidth, mHeight);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("SmearEffect image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void smearEffectPDN()
+    {
+        final int CROSSES = 0;
+        final int LINES = 1;
+        final int CIRCLES = 2;
+        final int SQUARES = 3;
+
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.SmearEffectPDN(data, mWidth, mHeight, LINES, (float)(Math.PI/4), 0.5f, 0, 10, 0.5f, false);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("SmearEffectPDN image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+    }
+
+    public void gaussianBlurPDN()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.GaussianBlurPDN(data, mWidth, mHeight, 15);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("GaussianBlurPDN image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+
+    }
+
+    public void glowEffectPDN()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.GlowEffectPDN(data, mWidth, mHeight, 6, 10, 10);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("GlowEffectPDN image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+
+    }
+
+    public void jitterEffectPDN()
+    {
+        final int JITTER_EDGE_NONE = 0;
+        final int JITTER_EDGE_WRAP = 1;
+        final int JITTER_EDGE_REFLECT = 2;
+        final int JITTER_EDGE_PRIMARY = 3;
+        final int JITTER_EDGE_SECONDARY = 4;
+
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.JitterEffectPDN(data, mWidth, mHeight, 4, 2, 1, 0,
+                    0, JITTER_EDGE_REFLECT);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("JitterEffectPDN image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+
+    }
+
+    public void stichEffectPDN()
+    {
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
+
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.StichEffectPDN(data, mWidth, mHeight, 5, 1, 45, -45, true);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
+
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("StichEffectPDN image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
+
+    }
 
     interface ImageFilterViewModelListener{
         void onMessage(String msg);
