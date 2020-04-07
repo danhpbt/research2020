@@ -1118,7 +1118,7 @@ public class ImageFilterViewModel extends BaseViewModel {
             int[] data = new int[length];
 
             System.arraycopy(mData, 0, data, 0, length);
-            ImageUtil.SmearEffectPDN(data, mWidth, mHeight, LINES, (float)(Math.PI/4), 0.5f, 0, 10, 0.5f, false);
+            ImageUtil.SmearEffectPDN(data, mWidth, mHeight, CIRCLES, (float)(Math.PI/4), 0.5f, 0, 10, 0.5f, false);
             Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
             emitter.onSuccess(bitmap);
