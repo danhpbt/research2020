@@ -12,6 +12,18 @@ import com.xynotec.image.ImageUtil;
 import com.xynotec.research2020.R;
 import com.xynotec.research2020.data.DataManager;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Completable;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class ImageFilterViewModel extends BaseViewModel {
     private final ObservableField<Bitmap> mBitmap = new ObservableField<>();
     private int[] mData;
@@ -70,533 +82,717 @@ public class ImageFilterViewModel extends BaseViewModel {
 
     public void antiGrain()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.AntiGrain(data, mWidth, mHeight);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.AntiGrain(data, mWidth, mHeight);
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("Grayscale image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-            mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void grayScale()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.GrayScale(data, mWidth, mHeight);
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.GrayScale(data, mWidth, mHeight);
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("Grayscale image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-            mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void colorFilter()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.ColorFilter(data, mWidth, mHeight, 0); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.ColorFilter(data, mWidth, mHeight, 0); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void gamma()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Gamma(data, mWidth, mHeight, 0.5, 0.5, 0.5);//value 0->1
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Gamma(data, mWidth, mHeight, 0.5, 0.5, 0.5);//value 0->1
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void brightness()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Brightness(data, mWidth, mHeight, -100); //value -255->255
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Brightness(data, mWidth, mHeight, -100); //value -255->255
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void contrast()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Contrast(data, mWidth, mHeight, -50); //value -100->100
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Contrast(data, mWidth, mHeight, -50); //value -100->100
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void invert()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Invert(data, mWidth, mHeight); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Invert(data, mWidth, mHeight); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void smooth()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Smooth(data, mWidth, mHeight, 1); //default to 1
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Smooth(data, mWidth, mHeight, 1); //default to 1
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void gaussianBlur()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.GaussianBlur(data, mWidth, mHeight, 20); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.GaussianBlur(data, mWidth, mHeight, 20); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void meanRemoval()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.MeanRemoval(data, mWidth, mHeight, 9); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.MeanRemoval(data, mWidth, mHeight, 9); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void sharpen()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Sharpen(data, mWidth, mHeight, 11); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Sharpen(data, mWidth, mHeight, 11); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void embossLaplacian()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.EmbossLaplacian(data, mWidth, mHeight); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.EmbossLaplacian(data, mWidth, mHeight); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void edgeDetect()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.EdgeDetectQuick(data, mWidth, mHeight); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.EdgeDetectQuick(data, mWidth, mHeight); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void flip()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Flip(data, mWidth, mHeight, true, true); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Flip(data, mWidth, mHeight, true, true); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void randomJitter()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.RandomJitter(data, mWidth, mHeight, (short)5); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.RandomJitter(data, mWidth, mHeight, (short)5); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void swirl()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Swirl(data, mWidth, mHeight, 0.4, true); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Swirl(data, mWidth, mHeight, 0.4, true); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void sphere()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Sphere(data, mWidth, mHeight, false); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Sphere(data, mWidth, mHeight, false); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void timeWarp()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.TimeWarp(data, mWidth, mHeight, (byte)15, false); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.TimeWarp(data, mWidth, mHeight, (byte)15, false); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void moire()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Moire(data, mWidth, mHeight, 3); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Moire(data, mWidth, mHeight, 3); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void water()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Water(data, mWidth, mHeight, (short)15, false); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Water(data, mWidth, mHeight, (short)15, false); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void pixelate()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.Pixelate(data, mWidth, mHeight, (short)15, false); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.Pixelate(data, mWidth, mHeight, (short)15, false); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
     public void fishEye()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.FishEye(data, mWidth, mHeight, 0.03, false, false); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.FishEye(data, mWidth, mHeight, 0.03, false, false); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+                .doOnSubscribe(disposable -> {
+                    time[0] = System.currentTimeMillis();
+                    setIsLoading(true);})
+                .doOnTerminate(() -> {
+                    time[0] = System.currentTimeMillis() - time[0];
+                    setIsLoading(false);})
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(o -> {
+                            mBitmap.set((Bitmap)o);
+                            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+                            if (mListener != null)
+                                mListener.onMessage(msg);
+                        },
+                        throwable ->{
+                        }));
     }
 
 //void LiquidRender(byte* surface);
 //void Agg2DOverlayImage(System::Drawing::Bitmap^ overlayImg);
     public void bokehEffects()
     {
-        setIsLoading(true);
+        final long[] time = {0};
+        getCompositeDisposable().add(Single.create(emitter -> {
+            int length = mData.length;
+            int[] data = new int[length];
 
-        long time = System.currentTimeMillis();
+            System.arraycopy(mData, 0, data, 0, length);
+            ImageUtil.BokehEffects(data, mWidth, mHeight); //
+            Bitmap bitmap = Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888);
 
-        int length = mData.length;
-        int[] data = new int[length];
-
-        System.arraycopy(mData, 0, data, 0, length);
-        ImageUtil.BokehEffects(data, mWidth, mHeight); //
-        mBitmap.set(Bitmap.createBitmap(data, 0, mWidth, mWidth, mHeight, Bitmap.Config.ARGB_8888));
-
-        time = System.currentTimeMillis() - time;
-
-        String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time);
-
-        if (mListener != null)
-        mListener.onMessage(msg);
-
-        setIsLoading(false);
+            emitter.onSuccess(bitmap);
+        })
+        .doOnSubscribe(disposable -> {
+            time[0] = System.currentTimeMillis();
+            setIsLoading(true);})
+        .doOnTerminate(() -> {
+            time[0] = System.currentTimeMillis() - time[0];
+            setIsLoading(false);})
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(o -> {
+            mBitmap.set((Bitmap)o);
+            String msg = String.format("ColorFilter image %dx%d in %d", mWidth, mHeight, time[0]);
+            if (mListener != null)
+                mListener.onMessage(msg);
+            },
+                throwable ->{
+                }));
     }
 
 
